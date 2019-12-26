@@ -30,6 +30,7 @@
 - `virtualenv -p <which python> venv`
 - `source venv/bin/activate`
 - `pip install -r requirement.txt`
+- `python kinesis.py`
 
 ## To run connector:
 
