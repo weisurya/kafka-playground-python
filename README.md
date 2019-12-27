@@ -11,7 +11,7 @@
 - `docker-compose up -d --build`
 
 ## Additional preparation
-- For Mongo consumer, you need to change your Mongo configuration from direct connection to replication set. Detail reason on [here](https://docs.confluent.io/current/connect/debezium-connect-mongodb/index.html#configure-a-replication-mechanism-on-mongodb). To make things simpler, you can use the free tier of Mongo Atlas.
+- For Mongo consumer, you need to change your Mongo configuration from direct connection to replication set. Detail reason on [here](https://docs.confluent.io/current/connect/debezium-connect-mongodb/index.html#configure-a-replication-mechanism-on-mongodb). To make things simpler, you can use the free tier of Mongo Atlas and replace the mongoDB credential. (It will not be run by using the existing credential. Need to whitelist IP)
 - For Postgres consumer, you need to enable logical decoding feature. Detail explanation on [here](https://debezium.io/documentation/reference/1.0/connectors/postgresql.html)
 
 ## To run source-mongo:
