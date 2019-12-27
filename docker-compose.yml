@@ -47,8 +47,22 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
 
+  schema-registry-ui:
+    image: landoop/schema-registry-ui:0.9.5
+    ports:
+    - "8086:8086"
+    environment:
+      PORT: "8086"
+      PROXY: "true"
+      SCHEMAREGISTRY_URL: "http://schema-registry:8081/"
+    depends_on:
+    - "schema-registry"
+
   connect:
-    image: cnfldemos/kafka-connect-datagen:0.1.3-5.3.1
+    image: confluentinc/kafka-connect-datagen:5.3.1
+    build:
+      context: .
+      dockerfile: connect.Dockerfile
     hostname: connect
     container_name: connect
     depends_on:
@@ -178,17 +192,14 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 
   postgres:
-    image: postgres:11
+    image: debezium/postgres:11
     ports:
     - "5433:5432"
-
-  mongo:
-    image: mongo:4.2
-    ports:
-    - "27020:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "admin"
-      MONGO_INITDB_ROOT_PASSWORD: "password"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - ./source-postgres/migration/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   kinesis:
     image: instructure/kinesalite
