@@ -3,7 +3,7 @@ import time
 
 import generate_data
 
-DEFAULT_USER = "postgres"
+DEFAULT_USER = "admin"
 DEFAULT_PASS = "password"
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = "5433"
