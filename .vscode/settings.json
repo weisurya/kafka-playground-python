@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/home/weisurya/miniconda3/bin/python",
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.flake8Enabled": false,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true
+}
