@@ -3,6 +3,8 @@
 ## Requirements
 - Python 3.7
 - Docker
+- AWS Account
+- Mongo DB with replica set activated
 
 ## PoC Architecture
 ![PoC Architecture](image/architecture.png)
@@ -11,6 +13,7 @@
 - `docker-compose up -d --build`
 
 ## Additional preparation
+- Fill the value on `.env.sample.sh`
 - For Mongo consumer, you need to change your Mongo configuration from direct connection to replication set. Detail reason on [here](https://docs.confluent.io/current/connect/debezium-connect-mongodb/index.html#configure-a-replication-mechanism-on-mongodb). To make things simpler, you can use the free tier of Mongo Atlas and replace the mongoDB credential. (It will not be run by using the existing credential. Need to whitelist IP)
 - For Postgres consumer, you need to enable logical decoding feature. Detail explanation on [here](https://debezium.io/documentation/reference/1.0/connectors/postgresql.html)
 
@@ -18,6 +21,7 @@
 - `cd source-mongo`
 - `virtualenv -p <which python> venv`
 - `source venv/bin/activate`
+- `cd .. && source .env.sample.sh`
 - `pip install -r requirement.txt`
 - `python database.py`
 
@@ -26,6 +30,7 @@
 - `cd source-postgres`
 - `virtualenv -p <which python> venv`
 - `source venv/bin/activate`
+- `cd .. && source .env.sample.sh`
 - `pip install -r requirement.txt`
 - `python database.py`
 
@@ -33,10 +38,16 @@
 - `cd source-kinesis`
 - `virtualenv -p <which python> venv`
 - `source venv/bin/activate`
+- `cd .. && source .env.sample.sh`
 - `pip install -r requirement.txt`
 - `python kinesis.py`
 
 ## To run connector:
+- `source .env.sample.sh`
+`cd connector`
+`python postgres.py`
+`python mongo.py`
+`python kinesis.py`
 
 ## To run consumer:
 
