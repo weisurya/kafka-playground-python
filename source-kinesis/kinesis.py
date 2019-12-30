@@ -79,8 +79,5 @@ if __name__ == "__main__":
             stream_new_data(client, DEFAULT_TOPIC)
             time.sleep(1)
 
-            
-
-
     except (KeyboardInterrupt, SystemExit) as e:
         print(e)
