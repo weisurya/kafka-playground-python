@@ -1,27 +1,27 @@
 import boto3
 import json
 import time
+import os
 
 import generate_data
 
-DEFAULT_URL = "http://localhost:4567"
-DEFAULT_AWS_ACCESS_KEY_ID = ""
-DEFAULT_AWS_SECRET_ACCESS_KEY = ""
+DEFAULT_REGION = "us-east-1"
+DEFAULT_AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+DEFAULT_AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
 DEFAULT_TOPIC = "kinesis-topic"
 
 class Kinesis:
-    def __init__(self, url=DEFAULT_URL):
-        self.url = url
+    def __init__(self, region=DEFAULT_REGION):
+        self.region = region
 
     def connect(self):
         session = boto3.Session(
-            region_name="eu-west-2",
+            region_name=self.region
         )
 
         client = session.client('kinesis',
             aws_access_key_id=DEFAULT_AWS_ACCESS_KEY_ID,
             aws_secret_access_key=DEFAULT_AWS_SECRET_ACCESS_KEY,
-            endpoint_url=self.url,
         )
 
         return client
@@ -58,6 +58,15 @@ def stream_new_data(client=None, topic=None):
 
     print(response)
 
+def get_data(client=None, topic=None):
+    response = client.get_shard_iterator(
+        StreamName=DEFAULT_TOPIC,
+        ShardId="shardId-000000000000",
+        ShardIteratorType="TRIM_HORIZON",
+    )
+
+    print(response)
+
 if __name__ == "__main__":
     try:
         client = Kinesis().connect()
@@ -69,6 +78,8 @@ if __name__ == "__main__":
         while True:
             stream_new_data(client, DEFAULT_TOPIC)
             time.sleep(1)
+
+            
 
 
     except (KeyboardInterrupt, SystemExit) as e:

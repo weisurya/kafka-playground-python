@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 import time
+import os
 
 import generate_data
 
-DEFAULT_URL = "mongodb+srv://admin:P4ssw0rd@surya-playground-jw0cq.mongodb.net/test?retryWrites=true&w=majority"
+DEFAULT_URL = os.environ.get('MONGO_URL', '')
 DEFAULT_DB = "data"
 DEFAULT_COLLECTION = 'user'
 

@@ -1,13 +1,14 @@
 import json
 import requests
+import os
 
 KAFKA_BROKER_URL = "localhost:9092"
 KAFKA_CONNECT_URL = "http://localhost:8083/connectors"
 
 MONGO_REPLICA_SET = "rs0"
-MONGO_URL = "surya-playground-shard-00-00-jw0cq.mongodb.net:27017,surya-playground-shard-00-01-jw0cq.mongodb.net:27017,surya-playground-shard-00-02-jw0cq.mongodb.net:27017"
-MONGO_USER = "admin"
-MONGO_PASS = "P4ssw0rd"
+MONGO_URL = os.environ.get('MONGO_REPLICA_URL', '')
+MONGO_USER = os.environ.get('MONGO_USER', '')
+MONGO_PASS = os.environ.get('MONGO_PASSWORD', '')
 MONGO_DB = "data"
 
 MONGO_WHITELIST_COLLECTION = "data.user"
